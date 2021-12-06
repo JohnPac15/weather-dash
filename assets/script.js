@@ -1,12 +1,14 @@
 cityArray = JSON.parse(localStorage.getItem("City History"))
+
+
 var city = document.getElementById("display-city")
 var currentTemp = document.getElementById("current-temp")
 var wind = document.getElementById("wind")
 var humidity = document.getElementById("humidity")
 var uvIndex = document.getElementById("uv-index")
-
 var subBtn = document.getElementById("sub-btn")
 var cityInput = document.getElementById("city-finder")
+var weatherBlocks = document.getElementById("weather-blocks")
 
 
 getWeather = function(C) {
@@ -42,7 +44,40 @@ getWeather = function(C) {
                 fetch(getMoreWeather).then(function(response) {
                     if(response.ok) {
                         response.json().then(function(citydata) {
+                            let weatherDays = citydata.daily
                             console.log(citydata);
+                            console.log(weatherDays);
+                            
+                            for(i = 0; i < 5; i++){
+                                let timeStamp = citydata.daily[i].dt
+                                let theDate = new Date(timeStamp * 1000)
+                                let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                let theMonth = months[theDate.getMonth()];
+                                let theDay = theDate.getDate()
+                                let theYear = theDate.getFullYear()
+                                let fullDate = theMonth + "/" + theDay + "/" +  theYear
+
+
+                                console.log(fullDate);
+
+                                var divEl = document.createElement("div")
+                                var h4El = document.createElement("h4")
+                                var p1El = document.createElement("p")
+                                var p2El = document.createElement("p")
+                                var p3El = document.createElement("p")
+                                var p4El = document.createElement("p")
+
+                                weatherBlocks.appendChild(divEl)
+                                divEl.appendChild(h4El)
+                                divEl.appendChild(p1El)
+                                divEl.appendChild(p2El)
+                                divEl.appendChild(p3El)
+                                divEl.appendChild(p4El)
+
+                                divEl.setAttribute("style", "border: 3px solid black;")
+                                h4El.textContent = fullDate
+
+                            }
                         })
                     }
                 })
