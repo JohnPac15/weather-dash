@@ -10,6 +10,7 @@ var subBtn = document.getElementById("sub-btn")
 var cityInput = document.getElementById("city-finder")
 var theSearchHistory = document.getElementById("display-history")
 var weatherBlocks = document.getElementById("weather-blocks")
+var todaysIconHTML = document.getElementById("todays-icon")
 
 
 getWeather = function(C) {
@@ -27,21 +28,14 @@ getWeather = function(C) {
                 let cityMainName = data.name
                 let tempNow = data.main.temp
                 let windSpeed = data.wind.speed
-                let humidtyNow = data.main.humidity
+                let humidityNow = data.main.humidity
                 let lat = data.coord.lat
                 let lon = data.coord.lon
                 
-                console.log(cityMainName)
-                console.log(tempNow)
-                console.log(humidtyNow)
-                console.log(humidtyNow)
-                console.log(lat)
-                console.log(lon)
-                
                 theCityName.textContent = cityMainName
-                city.textContent = "Current emperature is: " + tempNow;
-                wind.textContent= "Current windspeed is: " + windSpeed
-                humidity.textContent = "Current humitiy is: " + humidtyNow + "%"
+                city.textContent = "Current Temperature: " + tempNow;
+                wind.textContent= "Windspeed: " + windSpeed + " MPH "
+                humidity.textContent = "Current humidity is: " + humidityNow + "%"
                 
                 let getMoreWeather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=d310cdc3e7de424fc0047cf1fd72fd27"
 
@@ -50,9 +44,18 @@ getWeather = function(C) {
                         response.json().then(function(citydata) {
                             let weatherDays = citydata.daily
                             let index = citydata.daily[0].uvi
+                            let weatherIcon = citydata.daily[0].weather[0].icon
+                            let todaysIcon = "http://openweathermap.org/img/wn/"+weatherIcon+".png";
+                            $("#todays-icon").attr("src", todaysIcon);
                             console.log(citydata)
-                            console.log(index);
-                            uvIndex.textContent = index
+
+
+
+
+
+
+    
+                            uvIndex.textContent = "UV Index: " + index;
 
                             if(index < 3){
                                 $(uvIndex).addClass("bg-success")
@@ -65,34 +68,35 @@ getWeather = function(C) {
                             }
                             
                             
-                            
+                           
+                            //clears out weather blocks. so we cant span a ton of weather blocks and break the page 
+                            weatherBlocks.textContent = ""
+
+                            //creates the weather blocks for 5 day forcast
                             for(i = 0; i < 5; i++){
-                                
+
+
                                 // fetch("http://openweathermap.org/img/wn/"+ forcastIcon +"@2x.png").then(function(iconData) {
                                     // })
                                     let forcastIcon = citydata.daily[i].weather[0].icon
                                     let iconUrl = "http://openweathermap.org/img/wn/"+forcastIcon+".png";
-                                    fetch(iconUrl).then(function(response) {
-                                        console.log(response)
-                                    })
-
                                 
-                                let timeStamp = citydata.daily[i].dt
-                                let theDate = new Date(timeStamp * 1000)
-                                let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                                let theMonth = months[theDate.getMonth()];
-                                let theDay = theDate.getDate()
-                                let theYear = theDate.getFullYear()
-                                let fullDate = theMonth + "/" + theDay + "/" +  theYear
-
-                                let forcastTemp= citydata.daily[i].temp.day
-                                let forcastWindSpeed = citydata.daily[i].wind_speed
-                                let forcastHumidity = citydata.daily[i].humidity
-
-                                console.log(forcastIcon)
-                                console.log(iconUrl);
-
-                                var divEl = document.createElement("div")
+                                    let timeStamp = citydata.daily[i].dt
+                                    let theDate = new Date(timeStamp * 1000)
+                                    let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                    let theMonth = months[theDate.getMonth()];
+                                    let theDay = theDate.getDate()
+                                    let theYear = theDate.getFullYear()
+                                    let fullDate = theMonth +" "+ theDay + "," +  theYear
+                                    
+                                    let forcastTemp= citydata.daily[i].temp.day
+                                    let forcastWindSpeed = citydata.daily[i].wind_speed
+                                    let forcastHumidity = citydata.daily[i].humidity
+                                    
+                                    console.log(forcastIcon)
+                                    console.log(iconUrl);
+                                    
+                                    var divEl = document.createElement("div")
                                 var h4El = document.createElement("h4")
                                 var imgEl = document.createElement("img")
                                 var p2El = document.createElement("p")
@@ -106,23 +110,28 @@ getWeather = function(C) {
                                 divEl.appendChild(p3El)
                                 divEl.appendChild(p4El)
 
-                                divEl.setAttribute("style", "border: 3px solid black; width: auto;")
-                                $(imgEl).addClass("icon")
-                                $("imgEl").attr("src", 'http://openweathermap.org/img/wn/' + forcastIcon + ".png");
+                                divEl.setAttribute("style", "border: 3px solid white; width: 100%; margin: 2px;")
+                                $(divEl).addClass("vw-25 vh-25 text-center")
+                                h4El.setAttribute("style", "border-bottom: 3px solid black")
+                                $(p2El).addClass("w-auto")
+
+                                $(imgEl).addClass("icon border rounded-circle text-center")
+                                $(".icon").attr("src", iconUrl);
 
                                 h4El.textContent = fullDate
-                                imgEl.textContent = iconUrl
+                                // imgEl.textContent = iconUrl
                                 p2El.textContent = "Temperature: " + forcastTemp
                                 p3El.textContent = forcastWindSpeed + " MPH "
                                 p4El.textContent = " Humidity: " + forcastHumidity
 
 
                             }
+                            
                         })
                     }
                 })
-
-
+                
+                
             })
         }
     })
@@ -132,17 +141,69 @@ getWeather = function(C) {
 displayHistory =function() {
     searchHistoy = JSON.parse(localStorage.getItem("City History"))
 
-
-    for(i=0;i<10;i++) {
-        let thisCity = searchHistoy[i].Name
-        var historyDiv = document.createElement("div")
-        
-        theSearchHistory.appendChild(historyDiv)
-        $(historyDiv).addClass("clear-div")
-        historyDiv.setAttribute("style", "background-color: grey; color: white; margin: 1%; padding: 1%; height: auto;")
-        historyDiv.innerHTML = thisCity;
-        
+    if(searchHistoy == null) {
+        searchHistoy = []
+        getWeather("San Antonio")
     }
+    else {
+
+    
+    
+        //this will display the last searched city on page load.
+        var lastSearchedItem = searchHistoy.slice(-1)
+
+        for(let i = 0; i < 1; i++) {
+            let displayLastCity = lastSearchedItem[i].Name
+            console.log(displayLastCity)
+            getWeather(displayLastCity)
+        }
+        
+        //this will display the localstroage in reverse order
+        for(let i=searchHistoy.length -1; i >= 0; i--) {
+            let startingPoint =(searchHistoy.length - 1)
+            let endPoint = (startingPoint - 10)
+            console.log(startingPoint)
+            console.log(i)
+
+            //this allows for only 10 recently searched cities to be displayed
+            if(i == endPoint) {
+                break
+            }
+            else{
+
+                let thisCity = searchHistoy[i].Name
+                var historyDiv = document.createElement("button")
+                
+                theSearchHistory.appendChild(historyDiv)
+                $(historyDiv).addClass("clear-div")
+                historyDiv.setAttribute("style", "background-color: grey; color: white; margin: 1%; padding: 1%; height: 38px; border: 3px black solid")
+                historyDiv.innerHTML = thisCity;
+            }   
+        }
+    }
+
+    // this will allow you to click on the list displayed of searched cities and search them again.
+    clickHIstoryDiv = document.querySelector(".clear-div")
+    $(".clear-div").on("click", function() {
+        historyCity = ($(this).text())
+        // getWeather(historyCity)
+
+        cityInfo = {
+            Name: historyCity,
+        }
+        
+        if(cityArray == null) {
+            cityArray = []
+            cityArray.push(cityInfo)
+            localStorage.setItem("City History", JSON.stringify(cityArray))
+        }else{
+            cityArray.push(cityInfo)
+            localStorage.setItem("City History", JSON.stringify(cityArray))
+        }
+        document.location.reload()
+    })
+    
+
 }
 
 subBtn.addEventListener("click", function(event) {
@@ -162,8 +223,11 @@ subBtn.addEventListener("click", function(event) {
         cityArray.push(cityInfo)
         localStorage.setItem("City History", JSON.stringify(cityArray))
     }
+    document.location.reload()
     
-    getWeather(cityName)
+    // getWeather(cityName)
+    
+    
     for(i=0;i<10;i++){
         historyDiv.textContent = " "
 
@@ -171,8 +235,10 @@ subBtn.addEventListener("click", function(event) {
         
         displayHistory();
     }
-
-
-
+    
+    
+    
 })
+// var revisistHistory = document.querySelector(".clear-div")
+
 displayHistory()
