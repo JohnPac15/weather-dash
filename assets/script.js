@@ -19,7 +19,7 @@ getWeather = function(intialCityName) {
     
     fetch(getThatWeater).then(function(response){
         
-        console.log(getThatWeater);
+        console.log(response);
         // console.log(response);
         
         if(response.ok) {
@@ -99,10 +99,13 @@ getWeather = function(intialCityName) {
                                     divEl.appendChild(p3El)
                                     divEl.appendChild(p4El)
 
-                                    divEl.setAttribute("style", "border: 3px solid white; margin: 2px;")
-                                    $(divEl).addClass("col-12 col-sm-2 justify-contect-around")
+                                    divEl.setAttribute("style", "border: 3px solid white; margin: 2px; text-size: 80%;")
+                                    $(divEl).addClass("col-12 col-md-2 justify-contect-around text-center text-white w-auto bg-secondary bg-gradien rounded-3")
                                     h4El.setAttribute("style", "border-bottom: 3px solid black")
+
                                     // $(p2El).addClass("w-auto")
+
+                                    $(h4El).addClass("text-white w-100")
 
                                     $(imgEl).addClass("icon border rounded-circle text-center")
                                     $(".icon").attr("src", iconUrl);
@@ -122,6 +125,10 @@ getWeather = function(intialCityName) {
                 
                 
             })
+        }
+        else{
+            alert("You did not search a valid city, Please try again")
+            getWeather("San Antonio")
         }
     })
     
@@ -164,7 +171,7 @@ displayHistory =function() {
                 var historyDiv = document.createElement("button")
                 
                 theSearchHistory.appendChild(historyDiv)
-                $(historyDiv).addClass("clear-div")
+                $(historyDiv).addClass("shadow-sm rounded")
                 historyDiv.setAttribute("style", "background-color: grey; color: white; margin: 1%; padding: 1%; height: 38px; border: 3px black solid")
                 historyDiv.innerHTML = thisCity;
             }   

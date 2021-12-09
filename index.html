@@ -23,30 +23,30 @@
                             <form class="d-flex flex-column justify-content-center">
                                 <label for="city-finder"></label>
                                 <input type="text" name="city-finder" id="city-finder">
-                                <button type="submit" class="sub-btn " id="sub-btn">City Finder</button>
+                                <button type="submit" class="sub-btn " id="sub-btn">Search</button>
                             </form>
                             <div class="p-2 d-flex flex-column" id="display-history"></div>
                         <!-- </div> -->
                     <!-- </div> -->
                 </div>
                 <div class="bg-secondary bg-opacity-75 bg-gradient col-md-9 col-sm-12 p-2">
-                    <div class="row">
+                    <div class="row justify-content-center">
                     <!-- <div class="vw-auto d-flex flex-column p-1"> -->
-                            <div class="bg-info col-12 p-1 text-center">
-                                <h3 class="text-center border-bottom border-white" id="display-city-name"></h3>
-                                <img class="border rounded-circle" id="todays-icon">
-                                <p id="display-city"></p>
-                                <p id=current-temp></p>
-                                <p id="wind"></p>
-                                <p id="humidity"></p>
-                                <div id="uv-index" class="w-25 text-white  col align-self-center"></div>
+                            <div class="bg-info col-12 p-1 text-center ">
+                                <h3 class="bg-secondary bg-gradien rounded text-white shadow text-center border-bottom border-white" id="display-city-name"></h3>
+                                <img class="border shadow rounded-circle" id="todays-icon">
+                                <p id="display-city" class="shadow-sm p-3 mb-1 bg-body rounded"></p>
+                                <p id=current-temp class=""></p>
+                                <p id="wind" class=""></p>
+                                <p id="humidity" class=""></p>
                             </div>
+                            <div id="uv-index" class="col-12 w-25 text-white text-center mb-2 border border-bottom-white justify-content-center p-2"></div>
                     </div>
                     <div class="row">
 
-                                <div class="col-12 bg-info mt-3">
-                                    <h3>5-day-forcast</h3> 
-                                    <div class="row justify-content-center bg-info  p-1 h-auto text text-center" id="weather-blocks"></div>
+                                <div class="col-12 col bg-info mt-3 text-center">
+                                    <h3 class="shadow border-bottom border-white bg-secondary bg-gradien rounded text-white">5-day-forcast</h3> 
+                                    <div class="row justify-content-center bg-info bg-gradien  p-1 h-auto text text-center" id="weather-blocks"></div>
                                 </div>
                     </div>
                             <!-- </div> -->
