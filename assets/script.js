@@ -13,9 +13,9 @@ var weatherBlocks = document.getElementById("weather-blocks")
 var todaysIconHTML = document.getElementById("todays-icon")
 
 
-getWeather = function(C) {
+getWeather = function(intialCityName) {
     // console.log(C)
-    let getThatWeater = "https://api.openweathermap.org/data/2.5/weather?q=" + C + "&units=imperial&appid=d310cdc3e7de424fc0047cf1fd72fd27";
+    let getThatWeater = "https://api.openweathermap.org/data/2.5/weather?q=" + intialCityName + "&units=imperial&appid=d310cdc3e7de424fc0047cf1fd72fd27";
     
     fetch(getThatWeater).then(function(response){
         
@@ -49,12 +49,6 @@ getWeather = function(C) {
                             $("#todays-icon").attr("src", todaysIcon);
                             console.log(citydata)
 
-
-
-
-
-
-    
                             uvIndex.textContent = "UV Index: " + index;
 
                             if(index < 3){
@@ -67,17 +61,12 @@ getWeather = function(C) {
                                 $(uvIndex).addClass("bg-danger")
                             }
                             
-                            
-                           
                             //clears out weather blocks. so we cant span a ton of weather blocks and break the page 
                             weatherBlocks.textContent = ""
 
                             //creates the weather blocks for 5 day forcast
                             for(i = 0; i < 5; i++){
 
-
-                                // fetch("http://openweathermap.org/img/wn/"+ forcastIcon +"@2x.png").then(function(iconData) {
-                                    // })
                                     let forcastIcon = citydata.daily[i].weather[0].icon
                                     let iconUrl = "http://openweathermap.org/img/wn/"+forcastIcon+".png";
                                 
@@ -97,32 +86,32 @@ getWeather = function(C) {
                                     console.log(iconUrl);
                                     
                                     var divEl = document.createElement("div")
-                                var h4El = document.createElement("h4")
-                                var imgEl = document.createElement("img")
-                                var p2El = document.createElement("p")
-                                var p3El = document.createElement("p")
-                                var p4El = document.createElement("p")
+                                    var h4El = document.createElement("h4")
+                                    var imgEl = document.createElement("img")
+                                    var p2El = document.createElement("p")
+                                    var p3El = document.createElement("p")
+                                    var p4El = document.createElement("p")
 
-                                weatherBlocks.appendChild(divEl)
-                                divEl.appendChild(h4El)
-                                divEl.appendChild(imgEl)
-                                divEl.appendChild(p2El)
-                                divEl.appendChild(p3El)
-                                divEl.appendChild(p4El)
+                                    weatherBlocks.appendChild(divEl)
+                                    divEl.appendChild(h4El)
+                                    divEl.appendChild(imgEl)
+                                    divEl.appendChild(p2El)
+                                    divEl.appendChild(p3El)
+                                    divEl.appendChild(p4El)
 
-                                divEl.setAttribute("style", "border: 3px solid white; width: 100%; margin: 2px;")
-                                $(divEl).addClass("vw-25 vh-25 text-center")
-                                h4El.setAttribute("style", "border-bottom: 3px solid black")
-                                $(p2El).addClass("w-auto")
+                                    divEl.setAttribute("style", "border: 3px solid white; margin: 2px;")
+                                    $(divEl).addClass("col-12 col-sm-2 justify-contect-around")
+                                    h4El.setAttribute("style", "border-bottom: 3px solid black")
+                                    // $(p2El).addClass("w-auto")
 
-                                $(imgEl).addClass("icon border rounded-circle text-center")
-                                $(".icon").attr("src", iconUrl);
+                                    $(imgEl).addClass("icon border rounded-circle text-center")
+                                    $(".icon").attr("src", iconUrl);
 
-                                h4El.textContent = fullDate
-                                // imgEl.textContent = iconUrl
-                                p2El.textContent = "Temperature: " + forcastTemp
-                                p3El.textContent = forcastWindSpeed + " MPH "
-                                p4El.textContent = " Humidity: " + forcastHumidity
+                                    h4El.textContent = fullDate
+                                    // imgEl.textContent = iconUrl
+                                    p2El.textContent = "Temperature: " + forcastTemp
+                                    p3El.textContent = forcastWindSpeed + " MPH "
+                                    p4El.textContent = " Humidity: " + forcastHumidity
 
 
                             }
@@ -225,20 +214,11 @@ subBtn.addEventListener("click", function(event) {
     }
     document.location.reload()
     
-    // getWeather(cityName)
-    
-    
     for(i=0;i<10;i++){
         historyDiv.textContent = " "
-
-
-        
         displayHistory();
     }
-    
-    
-    
+   
 })
-// var revisistHistory = document.querySelector(".clear-div")
 
 displayHistory()
