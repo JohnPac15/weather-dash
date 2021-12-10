@@ -107,14 +107,14 @@ getWeather = function(intialCityName) {
 
                                     $(h4El).addClass("text-white w-100")
 
-                                    $(imgEl).addClass("icon border rounded-circle text-center")
+                                    $(imgEl).addClass("icon border rounded-circle text-center bg-opacity-50")
                                     $(".icon").attr("src", iconUrl);
 
                                     h4El.textContent = fullDate
                                     // imgEl.textContent = iconUrl
                                     p2El.textContent = "Temperature: " + forcastTemp
                                     p3El.textContent = forcastWindSpeed + " MPH "
-                                    p4El.textContent = " Humidity: " + forcastHumidity
+                                    p4El.textContent = " Humidity: " + forcastHumidity +" % "
 
 
                             }
@@ -171,7 +171,7 @@ displayHistory =function() {
                 var historyDiv = document.createElement("button")
                 
                 theSearchHistory.appendChild(historyDiv)
-                $(historyDiv).addClass("shadow-sm rounded")
+                $(historyDiv).addClass("clear-div shadow-sm rounded")
                 historyDiv.setAttribute("style", "background-color: grey; color: white; margin: 1%; padding: 1%; height: 38px; border: 3px black solid")
                 historyDiv.innerHTML = thisCity;
             }   
