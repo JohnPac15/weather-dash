@@ -15,7 +15,7 @@ var todaysIconHTML = document.getElementById("todays-icon")
 
 getWeather = function(intialCityName) {
     // console.log(C)
-    let getThatWeater = "https://api.openweathermap.org/data/2.5/weather?q=" + intialCityName + "&units=imperial&appid=d310cdc3e7de424fc0047cf1fd72fd27";
+    let getThatWeater = "https://api.openweathermap.org/data/2.5/weather?q=" + intialCityName + "&units=imperial&appid=44dfe236d48c6a7275640600776bf8e5";
     
     fetch(getThatWeater).then(function(response){
         
@@ -37,7 +37,7 @@ getWeather = function(intialCityName) {
                 wind.textContent= "Windspeed: " + windSpeed + " MPH "
                 humidity.textContent = "Current humidity is: " + humidityNow + "%"
                 
-                let getMoreWeather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=d310cdc3e7de424fc0047cf1fd72fd27"
+                let getMoreWeather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=44dfe236d48c6a7275640600776bf8e5"
 
                 fetch(getMoreWeather).then(function(response) {
                     if(response.ok) {
@@ -126,10 +126,7 @@ getWeather = function(intialCityName) {
                 
             })
         }
-        else{
-            alert("You did not search a valid city, Please try again")
-            getWeather("San Antonio")
-        }
+        
     })
     
 }
